@@ -96,14 +96,19 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
      //drive code
-     m_robotDrive.arcadeDrive(m_stick.getY() * -1, m_stick.getX());
+    if(m_stick.getRawAxis(3)>0 && m_stick.getRawAxis(2)==0){
+     m_robotDrive.arcadeDrive(m_stick.getRawAxis(3), m_stick.getRawAxis(0))
+    }
+    else if(m_stick.getRawAxis(2)>0 && m_stick.getRawAxis(3)==0{
+     m_robotDrive.arcadeDrive(m_stick.getRawAxis(2) * -1, m_stick.getRawAxis(0))
+    }
      //arm rotation mvmt
      if (m_stick.getRawButton(3)){
        rota1.set(0.4);
        rota2.set(0.4);
        //up
      }
-     else if(m_stick.getRawButton(5)){
+     else if(m_stick.getRawButton(4)){
        rota1.set(-0.4);
        rota2.set(-0.4);
        //down
@@ -116,11 +121,11 @@ public class Robot extends TimedRobot {
  
      //input code (of arm???)
  
-     if (m_stick.getRawButton(2)){
+     if (m_stick.getRawButton(1)){
        input1.set(0.7);
        //forward
      }
-     else if(m_stick.getRawButton(1)){
+     else if(m_stick.getRawButton(2)){
        input1.set(-0.7);
        //reverse
      }
@@ -140,16 +145,24 @@ public class Robot extends TimedRobot {
   
   public void teleopPeriodic() {
     //drive code
-    m_robotDrive.arcadeDrive(m_stick.getY() * -1, m_stick.getX());
-    //arm rotation mvmt
-    if (m_stick.getRawButton(3)){
-      rota1.set(0.4);
-      rota2.set(0.4);
-      //up
+    if(m_stick.getRawAxis(3)>0 && m_stick.getRawAxis(2)>0){
+      system.out.print("SthAP PressiNG boTH BuTuNS!")
     }
-    else if(m_stick.getRawButton(5)){
-      rota1.set(-0.4);
-      rota2.set(-0.4);
+    else if(m_stick.getRawAxis(3)>0 && m_stick.getRawAxis(2)==0){
+     m_robotDrive.arcadeDrive(m_stick.getRawAxis(3), m_stick.getRawAxis(0))
+    }
+    else if(m_stick.getRawAxis(2)>0 && m_stick.getRawAxis(3)==0{
+     m_robotDrive.arcadeDrive(m_stick.getRawAxis(2) * -1, m_stick.getRawAxis(0))
+    }
+     //arm rotation mvmt
+     if (m_stick.getRawButton(3)){
+       rota1.set(0.4);
+       rota2.set(0.4);
+       //up
+     }
+     else if(m_stick.getRawButton(4)){
+       rota1.set(-0.4);
+       rota2.set(-0.4);
       //down
     }
     else{
@@ -160,11 +173,11 @@ public class Robot extends TimedRobot {
 
     //input code (of arm???)
 
-    if (m_stick.getRawButton(2)){
+    if (m_stick.getRawButton(1)){
       input1.set(0.7);
       //forward
     }
-    else if(m_stick.getRawButton(1)){
+    else if(m_stick.getRawButton(2)){
       input1.set(-0.7);
       //reverse
     }
@@ -192,14 +205,14 @@ public class Robot extends TimedRobot {
     //Rear Dual Legs Up and Down
     
     
-    if(m_stick.getRawButtonPressed(12)){
+    if(m_stick.getPOV()==0){
       rearPistons.set(DoubleSolenoid.Value.kReverse);
       frontPiston.set(DoubleSolenoid.Value.kReverse);
     }
-    else if (m_stick.getRawButtonPressed(10)){
+    else if (m_stick.getPOV()==270){
       rearPistons.set(DoubleSolenoid.Value.kForward);
     }
-    else if(m_stick.getRawButtonPressed(9)){
+    else if(m_stick.getPOV(90)){
       frontPiston.set(DoubleSolenoid.Value.kForward);
     }
 
